@@ -463,7 +463,8 @@
                 <p class="content-text" style="margin-bottom: 25px; text-align: center;">
                     নিচের বাটনে ক্লিক করে সম্পূর্ণ সূত্র শিটটি PDF আকারে ডাউনলোড করুন
                 </p>
-                <a href="https://raw.githubusercontent.com/deshicart/sutro/main/Math%209-10%20All%20Formula.pdf" target="_blank" class="btn btn-download">PDF ডাউনলোড করুন</a>
+                <a href="https://raw.githubusercontent.com/deshicart/sutro/main/Math%209-10%20All%20Formula.pdf" target="_blank" class="btn btn-download" id="downloadBtn">PDF ডাউনলোড করুন</a>
+                <p id="downloadCounter" style="margin-top: 20px; font-size: 1.1rem; color: var(--text-muted);">মোট ডাউনলোড সংখ্যা <span id="downloadCount">0</span> বার</p>
             </div>
         </section>
 
@@ -505,6 +506,10 @@
         </footer>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
     <!-- EmailJS SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     
@@ -513,6 +518,41 @@
         (function() {
             emailjs.init("rr5px2dPMDN-JdpJL");
         })();
+
+        // Firebase Configuration and Download Counter
+        const firebaseConfig = {
+            apiKey: "AIzaSyDRIB33DTmaeB5Y2o8EKYRy1wkM1vFXev4",
+            authDomain: "sutro-5ca3f.firebaseapp.com",
+            projectId: "sutro-5ca3f",
+            storageBucket: "sutro-5ca3f.firebasestorage.app",
+            messagingSenderId: "200347055939",
+            appId: "1:200347055939:web:cb7f28a06e9f181e9fa1f6",
+            databaseURL: "https://sutro-5ca3f-default-rtdb.firebaseio.com"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const downloadCountRef = database.ref('downloadCount');
+
+        // Listen for real-time updates to download count
+        downloadCountRef.on('value', (snapshot) => {
+            const count = snapshot.val() || 0;
+            document.getElementById('downloadCount').textContent = count;
+        });
+
+        // Download button click handler
+        const downloadBtn = document.getElementById('downloadBtn');
+        downloadBtn.addEventListener('click', function() {
+            // Increment download count in Firebase
+            downloadCountRef.transaction((currentCount) => {
+                return (currentCount || 0) + 1;
+            }, (error) => {
+                if (error) {
+                    console.error('Download count update failed:', error);
+                }
+            });
+        });
 
         // Smooth scroll behavior for internal links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
