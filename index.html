@@ -390,9 +390,209 @@
             color: var(--deep-purple);
             font-family: 'Poppins', sans-serif;
         }
+
+        /* Tips Popup Modal */
+        .tips-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tips-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .tips-popup {
+            background-color: var(--card-bg);
+            border: var(--border-thick) solid var(--primary-green);
+            border-radius: var(--border-radius);
+            padding: 35px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .tips-popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+            line-height: 1;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tips-popup-close:hover {
+            color: var(--deep-purple);
+        }
+
+        .tips-popup-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--deep-purple);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .tips-popup-message {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .btn-tips {
+            background-color: var(--primary-green);
+            color: white;
+            font-size: 1.2rem;
+            padding: 16px 40px;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-tips:hover {
+            background-color: #1b5e20;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+        }
+
+        /* Tips Section */
+        .tips-section {
+            background: linear-gradient(135deg, #f5f5f0 0%, #e8f5e9 100%);
+            border: var(--border-thick) solid var(--primary-green);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .tips-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .tips-section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--deep-purple);
+            margin-bottom: 20px;
+        }
+
+        .tips-section-text {
+            font-size: 1.15rem;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .tips-amount {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 25px;
+        }
+
+        .btn-tips-link {
+            background-color: var(--deep-purple);
+            color: white;
+            font-size: 1.3rem;
+            padding: 18px 50px;
+            display: inline-block;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-tips-link:hover {
+            background-color: var(--light-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 20, 140, 0.4);
+        }
+
+        @media (max-width: 600px) {
+            .tips-popup {
+                padding: 25px;
+            }
+
+            .tips-popup-title {
+                font-size: 1.4rem;
+            }
+
+            .tips-popup-message {
+                font-size: 1rem;
+            }
+
+            .tips-section {
+                padding: 25px;
+            }
+
+            .tips-section-title {
+                font-size: 1.5rem;
+            }
+
+            .tips-section-text {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Tips Popup Modal -->
+    <div id="tipsOverlay" class="tips-overlay">
+        <div class="tips-popup">
+            <button class="tips-popup-close" id="closePopup">&times;</button>
+            <h2 class="tips-popup-title">আমাদের সাথে থাকুন! 💚</h2>
+            <p class="tips-popup-message">
+                আপনার ছোট্ট একটি টিপস আমাদের এই ওয়েবসাইটকে আরও উন্নত করতে সাহায্য করবে। 
+                মাত্র ১০ টাকা থেকে শুরু করে আপনি আমাদের সাহায্য করতে পারেন। 
+                আপনার সাহায্য আমাদের জন্য অনুপ্রেরণা!
+            </p>
+            <button class="btn btn-tips" id="goToTipsBtn">টিপস দিন</button>
+        </div>
+    </div>
+
     <div class="container">
         <!-- Header -->
         <header class="header">
@@ -514,6 +714,27 @@
             </div>
         </section>
 
+        <!-- Tips Section -->
+        <section class="section" id="tipsSection">
+            <div class="tips-section">
+                <div class="tips-icon">💝</div>
+                <h2 class="tips-section-title">আমাদের সাহায্য করুন</h2>
+                <p class="tips-section-text">
+                    আপনার ছোট্ট একটি টিপস এই ওয়েবসাইটকে আরও ভালোভাবে পরিচালনা করতে সাহায্য করবে। 
+                </p>
+                <p class="tips-section-text">
+                    আমরা শিক্ষার্থীদের জন্য আরও বেশি কন্টেন্ট এবং রিসোর্স তৈরি করতে চাই। 
+                    আপনার সহযোগিতা আমাদের এই লক্ষ্য অর্জনে সাহায্য করবে।
+                </p>
+                <p class="tips-amount">
+                    ন্যূনতম টিপস: ১০ টাকা 💰
+                </p>
+                <a href="https://superchat.bd/shafinashrafin" target="_blank" class="btn-tips-link">
+                    এখনই টিপস দিন 🎁
+                </a>
+            </div>
+        </section>
+
         <!-- Footer -->
         <footer class="footer">
             <p>This website is made by Shafin Ashrafin</p>
@@ -529,38 +750,46 @@
     
     <script>
         // Firebase Configuration and Download Counter
-        const firebaseConfig = {
-            apiKey: "AIzaSyDRIB33DTmaeB5Y2o8EKYRy1wkM1vFXev4",
-            authDomain: "sutro-5ca3f.firebaseapp.com",
-            databaseURL: "https://sutro-5ca3f-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "sutro-5ca3f",
-            storageBucket: "sutro-5ca3f.firebasestorage.app",
-            messagingSenderId: "200347055939",
-            appId: "1:200347055939:web:cb7f28a06e9f181e9fa1f6"
-        };
+        try {
+            const firebaseConfig = {
+                apiKey: "AIzaSyDRIB33DTmaeB5Y2o8EKYRy1wkM1vFXev4",
+                authDomain: "sutro-5ca3f.firebaseapp.com",
+                databaseURL: "https://sutro-5ca3f-default-rtdb.asia-southeast1.firebasedatabase.app",
+                projectId: "sutro-5ca3f",
+                storageBucket: "sutro-5ca3f.firebasestorage.app",
+                messagingSenderId: "200347055939",
+                appId: "1:200347055939:web:cb7f28a06e9f181e9fa1f6"
+            };
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const downloadCountRef = database.ref('downloadCount');
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            const database = firebase.database();
+            const downloadCountRef = database.ref('downloadCount');
 
-        // Load and listen for real-time updates to download count
-        downloadCountRef.on('value', (snapshot) => {
-            const count = snapshot.val() || 0;
-            document.getElementById('downloadCount').textContent = count;
-        });
-
-        // Increment download count when button is clicked
-        document.getElementById('downloadBtn').addEventListener('click', () => {
-            downloadCountRef.transaction((currentCount) => {
-                return (currentCount || 0) + 1;
+            // Load and listen for real-time updates to download count
+            downloadCountRef.on('value', (snapshot) => {
+                const count = snapshot.val() || 0;
+                document.getElementById('downloadCount').textContent = count;
             });
-        });
+
+            // Increment download count when button is clicked
+            document.getElementById('downloadBtn').addEventListener('click', () => {
+                downloadCountRef.transaction((currentCount) => {
+                    return (currentCount || 0) + 1;
+                });
+            });
+        } catch (error) {
+            console.log('Firebase not available:', error.message);
+        }
 
         // Initialize EmailJS
-        (function() {
-            emailjs.init("rr5px2dPMDN-JdpJL");
-        })();
+        try {
+            (function() {
+                emailjs.init("rr5px2dPMDN-JdpJL");
+            })();
+        } catch (error) {
+            console.log('EmailJS not available:', error.message);
+        }
 
         // Smooth scroll behavior for internal links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -573,6 +802,51 @@
                     });
                 }
             });
+        });
+
+        // Tips Popup Functionality
+        const tipsOverlay = document.getElementById('tipsOverlay');
+        const closePopupBtn = document.getElementById('closePopup');
+        const goToTipsBtn = document.getElementById('goToTipsBtn');
+        const tipsSection = document.getElementById('tipsSection');
+
+        // Check if popup has been closed before
+        const popupDismissed = localStorage.getItem('tipsPopupDismissed');
+
+        // Show popup if not dismissed before
+        if (!popupDismissed) {
+            // Show popup after a short delay for better UX
+            setTimeout(() => {
+                tipsOverlay.classList.add('active');
+            }, 1000);
+        }
+
+        // Close popup when X is clicked
+        closePopupBtn.addEventListener('click', () => {
+            tipsOverlay.classList.remove('active');
+            localStorage.setItem('tipsPopupDismissed', 'true');
+        });
+
+        // Close popup when clicking outside
+        tipsOverlay.addEventListener('click', (e) => {
+            if (e.target === tipsOverlay) {
+                tipsOverlay.classList.remove('active');
+                localStorage.setItem('tipsPopupDismissed', 'true');
+            }
+        });
+
+        // Scroll to tips section when button is clicked
+        goToTipsBtn.addEventListener('click', () => {
+            tipsOverlay.classList.remove('active');
+            localStorage.setItem('tipsPopupDismissed', 'true');
+            
+            // Smooth scroll to tips section
+            setTimeout(() => {
+                tipsSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }, 300);
         });
 
         // Feedback Form Submission
