@@ -813,35 +813,26 @@
         const goToTipsBtn = document.getElementById('goToTipsBtn');
         const tipsSection = document.getElementById('tipsSection');
 
-        // Check if popup has been closed before
-        const popupDismissed = localStorage.getItem('tipsPopupDismissed');
-
-        // Show popup if not dismissed before
-        if (!popupDismissed) {
-            // Show popup after a short delay for better UX
-            setTimeout(() => {
-                tipsOverlay.classList.add('active');
-            }, POPUP_DELAY_MS);
-        }
+        // Show popup after a short delay for better UX
+        setTimeout(() => {
+            tipsOverlay.classList.add('active');
+        }, POPUP_DELAY_MS);
 
         // Close popup when X is clicked
         closePopupBtn.addEventListener('click', () => {
             tipsOverlay.classList.remove('active');
-            localStorage.setItem('tipsPopupDismissed', 'true');
         });
 
         // Close popup when clicking outside
         tipsOverlay.addEventListener('click', (e) => {
             if (e.target === tipsOverlay) {
                 tipsOverlay.classList.remove('active');
-                localStorage.setItem('tipsPopupDismissed', 'true');
             }
         });
 
         // Scroll to tips section when button is clicked
         goToTipsBtn.addEventListener('click', () => {
             tipsOverlay.classList.remove('active');
-            localStorage.setItem('tipsPopupDismissed', 'true');
             
             // Smooth scroll to tips section
             setTimeout(() => {
