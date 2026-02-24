@@ -729,7 +729,7 @@
                 <p class="tips-amount">
                     ন্যূনতম টিপস: ১০ টাকা 💰
                 </p>
-                <a href="https://superchat.bd/shafinashrafin" target="_blank" class="btn-tips-link">
+                <a href="https://superchat.bd/shafinashrafin" target="_blank" rel="noopener noreferrer" class="btn-tips-link">
                     এখনই টিপস দিন 🎁
                 </a>
             </div>
@@ -779,7 +779,7 @@
                 });
             });
         } catch (error) {
-            console.log('Firebase not available:', error.message);
+            console.log('Firebase initialization failed:', error.message);
         }
 
         // Initialize EmailJS
@@ -788,7 +788,7 @@
                 emailjs.init("rr5px2dPMDN-JdpJL");
             })();
         } catch (error) {
-            console.log('EmailJS not available:', error.message);
+            console.log('EmailJS initialization failed:', error.message);
         }
 
         // Smooth scroll behavior for internal links
