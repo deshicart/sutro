@@ -805,6 +805,9 @@
         });
 
         // Tips Popup Functionality
+        const POPUP_DELAY_MS = 1000;  // Delay before showing popup
+        const SCROLL_DELAY_MS = 300;  // Delay before scrolling to tips section
+        
         const tipsOverlay = document.getElementById('tipsOverlay');
         const closePopupBtn = document.getElementById('closePopup');
         const goToTipsBtn = document.getElementById('goToTipsBtn');
@@ -818,7 +821,7 @@
             // Show popup after a short delay for better UX
             setTimeout(() => {
                 tipsOverlay.classList.add('active');
-            }, 1000);
+            }, POPUP_DELAY_MS);
         }
 
         // Close popup when X is clicked
@@ -846,7 +849,7 @@
                     behavior: 'smooth',
                     block: 'center'
                 });
-            }, 300);
+            }, SCROLL_DELAY_MS);
         });
 
         // Feedback Form Submission
